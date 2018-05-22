@@ -1,0 +1,121 @@
+<script>
+  const twice = {
+    members: [{
+        name: '나연',
+        country: 'korea',
+        birth: '1995'
+      },
+      {
+        name: '정연',
+        country: 'korea',
+        birth: '1996'
+      },
+      {
+        name: '모모',
+        country: 'japan',
+        birth: '1996'
+      },
+      {
+        name: '사나',
+        country: 'japan',
+        birth: '1996'
+      },
+      {
+        name: '지효',
+        country: 'korea',
+        birth: '1997'
+      },
+      {
+        name: '미나',
+        country: 'japan, usa',
+        birth: '1997'
+      },
+      {
+        name: '다현',
+        country: 'korea',
+        birth: '1998'
+      },
+      {
+        name: '채영',
+        country: 'korea',
+        birth: '1999'
+      },
+      {
+        name: '쯔위',
+        country: 'taiwan',
+        birth: '1999'
+      }
+    ]
+  }
+
+// _filter : 참 거짓으로 필터링
+function _filter(list, func) {
+  let result = []
+  const listLen = list.length
+  for (let i = 0; i < listLen; i++) {
+    const item = list[i]
+    if (func(item)) {
+      result.push(item)
+    }
+  }
+  return result
+}
+
+// _map
+function _map(list, mapper) {
+  let result = []
+  const listLen = list.length
+  for (let i = 0; i < listLen; i++) {
+    const item = list[i]
+    result.push(mapper(item))
+  }
+  return result
+}
+
+  // 출생년도 만으로 한국나이 구하기
+  function convertBirthToAge(birth) {
+    let result = ''
+    if (birth && parseInt(birth) && birth.length === 4) {
+      const currentYear = parseInt(new Date().getFullYear())
+      result = currentYear - parseInt(birth) + 1
+    }
+    return result
+  }
+
+// 멤버들 중 1996년 이전 출생자만 출력
+console.log(_filter(twice.members, function(mem){
+  return parseInt(mem.birth) <= 1996
+}))
+
+// 1~5의 숫자 중 홀수만 출력
+console.log(_filter([1, 2, 3, 4, 5], function(item){
+  return item % 2
+}))
+
+// 멤버들 중 1996년 이전 출생자
+const arrUnder1996Members = _filter(twice.members, function(mem){
+  return parseInt(mem.birth) <= 1996
+})
+console.log('arrUnder1996Members')
+console.log(arrUnder1996Members)
+
+// 멤버들 중 1996년 이전 출생자 이름만 출력
+console.log(_map(arrUnder1996Members, function(user){
+  return user.name
+}))
+
+// 멤버들 중 1996년 이전 출생자 나이만 출력
+console.log(_map(arrUnder1996Members, function(user){
+  return convertBirthToAge(user.birth) // 나이 추출하는 함수 활용
+}))
+
+// 멤버들 중 1996년 이전 출생자 이름만 출력
+console.log(_map(arrUnder1996Members, function(user){
+  return user.name
+}))
+
+// 멤버들 중 1996년 이전 출생자 나이만 출력
+console.log(_map(arrUnder1996Members, function(user){
+  return `${user.name} ${convertBirthToAge(user.birth)}`
+}))
+</script>
